@@ -7,14 +7,13 @@ import com.google.common.hash.Hashing;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
-import javax.transaction.Transactional;
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
-@Component
-@Transactional
+@Service
 public class UrlServiceImpl implements UrlService{
 
     @Autowired
@@ -78,5 +77,6 @@ public class UrlServiceImpl implements UrlService{
     public void incrementOpenedCount(String shortLink) {
         Url url = urlRepository.findByShortLink(shortLink);
         url.setOpenedCount(url.getOpenedCount() + 1);
+        urlRepository.save(url);
     }
 }
